@@ -1,0 +1,7 @@
+{
+  "name": "Drug Dose Calculator",
+  "description": "Clinical drug reference and pediatric/adult dosage calculator by age, weight, and formulation concentration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
