@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Medical Capsule Pill & Dosage Cross -->
+    <!-- Pill Capsule Container -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,44 C34,33 43,24 54,24 C65,24 74,33 74,44 L74,64 C74,75 65,84 54,84 C43,84 34,75 34,64 Z" />
+    <!-- Bottom Half Accent of Capsule -->
+    <path
+        android:fillColor="#D0BCFF"
+        android:pathData="M34,54 L74,54 L74,64 C74,75 65,84 54,84 C43,84 34,75 34,64 Z" />
+    <!-- Medical Cross on top half -->
+    <path
+        android:fillColor="#6750A4"
+        android:pathData="M51,32 L57,32 L57,38 L63,38 L63,44 L57,44 L57,50 L51,50 L51,44 L45,44 L45,38 L51,38 Z" />
+    <!-- Dosage Measurement Marks on bottom half -->
+    <path
+        android:fillColor="#21005D"
+        android:pathData="M44,60 L50,60 L50,62 L44,62 Z M44,66 L56,66 L56,68 L44,68 Z M44,72 L50,72 L50,74 L44,74 Z" />
+</vector>
+
