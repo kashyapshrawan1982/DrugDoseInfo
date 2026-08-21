@@ -51,17 +51,21 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    // Jetpack Compose Dependencies
+    // Jetpack Compose BOM (Bill of Materials)
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
+    // Core Compose libraries
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material:material") 
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     
-    // Compose ke saath Activity aur ViewModels
+    // 👇 Yahan Material 3 aur Extended Icons add kiye gaye hain
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
+    
+    // Compose with Activity and ViewModel
     implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
