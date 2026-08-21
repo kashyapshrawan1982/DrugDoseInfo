@@ -1708,7 +1708,7 @@ fun AdminPasscodeLockView(
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-          text = "Default Credentials — PIN: 8888 | Password: Admin@1234. Both can be modified in portal settings.",
+          text = "Contact Admin For Pin and Password.",
           fontSize = 10.5.sp,
           color = Color(0xFF21005D),
           lineHeight = 14.sp
