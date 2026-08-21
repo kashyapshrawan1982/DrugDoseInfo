@@ -1,4 +1,4 @@
-package com.example
+package com.example.drugdoseinfo
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,6 +29,8 @@ import com.example.viewmodel.AppTab
 import com.example.viewmodel.DoseCalculatorViewModel
 
 class MainActivity : ComponentActivity() {
+  
+  // Note: Agar DoseCalculatorViewModel mein koi parameters hain, toh yahan factory lagani padegi
   private val viewModel: DoseCalculatorViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
