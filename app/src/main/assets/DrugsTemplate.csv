@@ -1,0 +1,78 @@
+import android.content.Context
+import com.example.model.*
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.UUID
+
+object DrugCsvImporter {
+
+    fun readCsvFromAssets(context: Context, fileName: String): List<Drug> {
+        val drugList = mutableListOf<Drug>()
+        try {
+            val inputStream = context.assets.open(fileName)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            
+            // Pheli line (Header) ko skip karna
+            reader.readLine() 
+            
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                val cols = line!!.split(",")
+                if (cols.size < 23) continue
+
+                // Formulations ko parse karna (Pipe | aur Caret ^ se)
+                val formulations = cols[15].split("|").mapNotNull { form ->
+                    val parts = form.trim().split("^")
+                    if (parts.size == 3) {
+                        Formulation(
+                            id = UUID.randomUUID().toString(),
+                            name = parts[0],
+                            type = FormulationType.OTHER,
+                            concentrationMg = parts[1].toDoubleOrNull() ?: 0.0,
+                            volumeMl = parts[2].toDoubleOrNull() ?: 1.0,
+                            unitLabel = parts[0]
+                        )
+                    } else null
+                }
+
+                val regimen = IndicationRegimen(
+                    id = UUID.randomUUID().toString(),
+                    name = cols[7],
+                    description = "",
+                    defaultMgPerKgPerDay = if (cols[8] == "DAY") cols[9].toDoubleOrNull() ?: 0.0 else 0.0,
+                    defaultMgPerKgPerDose = if (cols[8] == "DOSE") cols[9].toDoubleOrNull() ?: 0.0 else null,
+                    frequencyTimesPerDay = cols[10].toIntOrNull() ?: 1,
+                    frequencyDescription = cols[11],
+                    maxSingleDoseMg = cols[12].toDoubleOrNull() ?: 0.0,
+                    maxDailyDoseMg = cols[13].toDoubleOrNull() ?: 0.0,
+                    standardDurationDays = cols[14].toIntOrNull() ?: 7
+                )
+
+                val drug = Drug(
+                    id = cols[0], // Yeh wahi drug_001 ya naam hoga
+                    name = cols[1],
+                    genericName = cols[2],
+                    category = DrugCategory.valueOf(cols[3]),
+                    subtitle = cols[4],
+                    description = cols[5],
+                    minAgeMonths = cols[6].toIntOrNull() ?: 0,
+                    defaultRegimen = regimen,
+                    formulations = formulations,
+                    indications = cols[16].split("|").map { it.trim() },
+                    contraindications = cols[17].split("|").map { it.trim() },
+                    warnings = cols[18].split("|").map { it.trim() },
+                    sideEffects = cols[19].split("|").map { it.trim() },
+                    administrationAdvice = cols[20],
+                    reconstitutionStorage = cols[21],
+                    adultDoseSummary = cols[22],
+                    standardRegimenSummary = cols[7]
+                )
+                drugList.add(drug)
+            }
+            reader.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return drugList
+    }
+}
