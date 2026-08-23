@@ -1,3 +1,5 @@
+package com.example.ui.screens
+
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -15,13 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-// Apne DrugCsvImporter ka import yahan zaroor check karein
-// import com.example.drugdoseinfo.util.DrugCsvImporter
+import com.example.util.DrugCsvImporter
+import com.example.viewmodel.DrugViewModel
 
 @Composable
 fun FormularyAdministrationCard(
-    viewModel: DrugViewModel, // Apna ViewModel yahan pass karein
-    totalDrugs: Int = 12,     // Database se live data yahan aayega
+    viewModel: DrugViewModel,
+    totalDrugs: Int = 12,
     customEntries: Int = 0,
     strengths: Int = 48
 ) {
@@ -32,7 +34,7 @@ fun FormularyAdministrationCard(
             .fillMaxWidth()
             .padding(16.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FC)), // Light grayish-white background
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FC)),
         border = BorderStroke(1.dp, Color(0xFFD1D1D6))
     ) {
         Column(
@@ -40,7 +42,7 @@ fun FormularyAdministrationCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // --- HEADER ROW ---
+            // Header Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,12 +72,11 @@ fun FormularyAdministrationCard(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // --- STATS CARDS ROW ---
+            // Stats Cards Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // Total Drugs (Purple)
                 StatBox(
                     modifier = Modifier.weight(1f),
                     count = totalDrugs.toString(),
@@ -84,7 +85,6 @@ fun FormularyAdministrationCard(
                     textColor = Color(0xFF381E72)
                 )
 
-                // Custom Entries (Green)
                 StatBox(
                     modifier = Modifier.weight(1f),
                     count = customEntries.toString(),
@@ -93,7 +93,6 @@ fun FormularyAdministrationCard(
                     textColor = Color(0xFF0F5223)
                 )
 
-                // Strengths (Pink)
                 StatBox(
                     modifier = Modifier.weight(1f),
                     count = strengths.toString(),
@@ -105,7 +104,7 @@ fun FormularyAdministrationCard(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // --- ACTION BUTTONS (SHARE & RESTORE) ---
+            // Action Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -115,7 +114,7 @@ fun FormularyAdministrationCard(
                     modifier = Modifier.weight(1f),
                     border = BorderStroke(1.dp, Color.Gray)
                 ) {
-                    Text("Share Formulary", color = Color(0xFFC8A2C8)) // Light purple text
+                    Text("Share Formulary", color = Color(0xFFC8A2C8))
                 }
 
                 OutlinedButton(
@@ -129,16 +128,12 @@ fun FormularyAdministrationCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // --- NEW: IMPORT CSV BUTTON ---
+            // Import CSV Button
             Button(
                 onClick = {
                     try {
-                        // Asset folder se CSV read karein
                         val parsedDrugs = DrugCsvImporter.readCsvFromAssets(context, "DrugsTemplate.csv")
-                        
-                        // Database mein insert karein (Apne viewModel ka exact function call karein)
-                        viewModel.insertAllDrugs(parsedDrugs) 
-                        
+                        viewModel.insertAllDrugs(parsedDrugs)
                         Toast.makeText(context, "Success! ${parsedDrugs.size} Drugs Imported.", Toast.LENGTH_LONG).show()
                     } catch (e: Exception) {
                         Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
@@ -147,7 +142,7 @@ fun FormularyAdministrationCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)), // Match Add Drug button color
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
                 shape = RoundedCornerShape(24.dp)
             ) {
                 Text(
@@ -161,7 +156,6 @@ fun FormularyAdministrationCard(
     }
 }
 
-// --- HELPER COMPOSABLE FOR STAT BOXES ---
 @Composable
 fun StatBox(modifier: Modifier = Modifier, count: String, label: String, backgroundColor: Color, textColor: Color) {
     Column(
