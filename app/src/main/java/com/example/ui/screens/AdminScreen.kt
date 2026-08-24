@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+// Naye, Sahi Imports 👇
 import com.example.util.DrugCsvImporter
 import com.example.viewmodel.DrugViewModel
 
@@ -37,12 +38,7 @@ fun FormularyAdministrationCard(
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FC)),
         border = BorderStroke(1.dp, Color(0xFFD1D1D6))
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            // Header Row
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -60,11 +56,7 @@ fun FormularyAdministrationCard(
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
                     shape = RoundedCornerShape(24.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add",
-                        modifier = Modifier.size(18.dp)
-                    )
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add", modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("Add Drug", fontWeight = FontWeight.Bold)
                 }
@@ -72,56 +64,19 @@ fun FormularyAdministrationCard(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Stats Cards Row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                StatBox(
-                    modifier = Modifier.weight(1f),
-                    count = totalDrugs.toString(),
-                    label = "Total Drugs",
-                    backgroundColor = Color(0xFFE8DEF8),
-                    textColor = Color(0xFF381E72)
-                )
-
-                StatBox(
-                    modifier = Modifier.weight(1f),
-                    count = customEntries.toString(),
-                    label = "Custom Entries",
-                    backgroundColor = Color(0xFFD7F8D3),
-                    textColor = Color(0xFF0F5223)
-                )
-
-                StatBox(
-                    modifier = Modifier.weight(1f),
-                    count = strengths.toString(),
-                    label = "Strengths",
-                    backgroundColor = Color(0xFFFFD8E4),
-                    textColor = Color(0xFF492532)
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                StatBox(Modifier.weight(1f), totalDrugs.toString(), "Total Drugs", Color(0xFFE8DEF8), Color(0xFF381E72))
+                StatBox(Modifier.weight(1f), customEntries.toString(), "Custom Entries", Color(0xFFD7F8D3), Color(0xFF0F5223))
+                StatBox(Modifier.weight(1f), strengths.toString(), "Strengths", Color(0xFFFFD8E4), Color(0xFF492532))
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Action Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { /* Share Logic */ },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(1.dp, Color.Gray)
-                ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = { }, modifier = Modifier.weight(1f), border = BorderStroke(1.dp, Color.Gray)) {
                     Text("Share Formulary", color = Color(0xFFC8A2C8))
                 }
-
-                OutlinedButton(
-                    onClick = { /* Restore Logic */ },
-                    modifier = Modifier.weight(1f),
-                    border = BorderStroke(1.dp, Color(0xFFD6777A))
-                ) {
+                OutlinedButton(onClick = { }, modifier = Modifier.weight(1f), border = BorderStroke(1.dp, Color(0xFFD6777A))) {
                     Text("Restore Defaults", color = Color(0xFFA13538), fontWeight = FontWeight.Bold)
                 }
             }
@@ -139,18 +94,11 @@ fun FormularyAdministrationCard(
                         Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
+                modifier = Modifier.fillMaxWidth().height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
                 shape = RoundedCornerShape(24.dp)
             ) {
-                Text(
-                    text = "Import Data from CSV",
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 16.sp
-                )
+                Text("Import Data from CSV", fontWeight = FontWeight.Bold, color = Color.White, fontSize = 16.sp)
             }
         }
     }
@@ -159,25 +107,12 @@ fun FormularyAdministrationCard(
 @Composable
 fun StatBox(modifier: Modifier = Modifier, count: String, label: String, backgroundColor: Color, textColor: Color) {
     Column(
-        modifier = modifier
-            .background(backgroundColor, RoundedCornerShape(12.dp))
-            .padding(vertical = 16.dp),
+        modifier = modifier.background(backgroundColor, RoundedCornerShape(12.dp)).padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = count,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = textColor
-        )
+        Text(text = count, fontSize = 22.sp, fontWeight = FontWeight.ExtraBold, color = textColor)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold,
-            color = textColor,
-            textAlign = TextAlign.Center
-        )
+        Text(text = label, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = textColor, textAlign = TextAlign.Center)
     }
 }
