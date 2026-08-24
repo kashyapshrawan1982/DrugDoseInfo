@@ -1,4 +1,6 @@
-package com.example.model
+package com.example.data
+
+import com.example.model.
 
 import com.example.model.Drug
 import com.example.model.DrugCategory
