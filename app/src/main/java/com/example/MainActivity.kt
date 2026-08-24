@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+// Sahi imports yahan hain 👇
 import com.example.ui.screens.FormularyAdministrationCard
 import com.example.viewmodel.DrugViewModel
 
@@ -20,10 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // ViewModel ko properly initialize karna
                     val viewModel: DrugViewModel = viewModel()
-                    
-                    // Nayi screen ko dikhana
                     FormularyAdministrationCard(viewModel = viewModel)
                 }
             }
