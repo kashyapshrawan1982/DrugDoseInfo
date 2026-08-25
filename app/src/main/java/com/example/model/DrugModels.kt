@@ -1,5 +1,6 @@
 package com.example.model
 
+import com.example.model.CalculationHistoryItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 // Agar 'Drug' red ho, toh Alt+Enter dabayein
