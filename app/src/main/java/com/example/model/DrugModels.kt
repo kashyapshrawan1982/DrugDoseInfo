@@ -1,11 +1,19 @@
 package com.example.model
 
 enum class DrugCategory {
-    ALL, ANTIBIOTIC, ANTIPYRETIC_ANALGESIC, OTHER
+    ALL, 
+    ANTIBIOTIC, 
+    ANTIPYRETIC_ANALGESIC, 
+    OTHER
 }
 
 enum class FormulationType {
-    ALL, SYRUP, ORAL_SUSPENSION, DROPS, TABLET, OTHER
+    ALL, 
+    SYRUP, 
+    ORAL_SUSPENSION, 
+    DROPS, 
+    TABLET, 
+    OTHER
 }
 
 data class Formulation(
@@ -18,7 +26,7 @@ data class Formulation(
     val standardDoses: List<Double> = emptyList()
 ) {
     val displayName: String get() = name
-    val mgPerMl: Double get() = if (volumeMl > 0) concentrationMg / volumeMl else 0.0
+    val mgPerMl: Double get() = if (volumeMl > 0.0) concentrationMg / volumeMl else 0.0
 }
 
 data class IndicationRegimen(
@@ -47,11 +55,11 @@ data class Drug(
     val name: String,
     val genericName: String,
     val category: DrugCategory,
-    val subtitle: String,
-    val description: String,
-    val standardRegimenSummary: String,
-    val adultDoseSummary: String,
-    val minAgeMonths: Int,
+    val subtitle: String = "",
+    val description: String = "",
+    val standardRegimenSummary: String = "",
+    val adultDoseSummary: String = "",
+    val minAgeMonths: Int = 0,
     val defaultRegimen: IndicationRegimen,
     val alternativeRegimens: List<IndicationRegimen> = emptyList(),
     val formulations: List<Formulation>,
@@ -73,13 +81,13 @@ data class Drug(
 data class DoseCalculationResult(
     val drug: Drug,
     val formulation: Formulation,
-    val singleDoseMg: Double,
-    val singleDoseMl: Double,
+    val singleDoseMg: Double = 0.0,
+    val singleDoseMl: Double = 0.0,
     val singleDoseTablets: Double? = null,
-    val dailyDoseMg: Double,
+    val dailyDoseMg: Double = 0.0,
     val totalDailyDoseMg: Double = 0.0,
     val totalDailyDoseMl: Double = 0.0,
-    val frequencyDescription: String,
+    val frequencyDescription: String = "",
     val frequencyText: String = "",
     val instructions: String = "",
     val bottlesNeededSummary: String = "",
