@@ -1,23 +1,14 @@
 package com.example.model
 
 enum class DrugCategory {
-    ALL, 
-    ANTIBIOTIC, 
-    ANTIPYRETIC_ANALGESIC, 
-    OTHER;
+    ALL, ANTIBIOTIC, ANTIPYRETIC_ANALGESIC, OTHER;
 
     val displayName: String 
         get() = name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
 }
 
 enum class FormulationType {
-    ALL, 
-    SYRUP, 
-    ORAL_SUSPENSION, 
-    DROPS, 
-    TABLET, 
-    CAPSULE, 
-    OTHER;
+    ALL, SYRUP, ORAL_SUSPENSION, DROPS, TABLET, CAPSULE, OTHER;
 
     val displayName: String 
         get() = name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
@@ -107,12 +98,6 @@ data class DoseCalculationResult(
     val stepByStepExplanation: String = "",
     val warnings: List<String> = emptyList(),
     val patientWeightKg: Double = 0.0,
-    
-    // 👇 Yeh 3 nayi lines add ki hain PdfReportGenerator ke liye 👇
-    val patientAgeYears: Int = 0,
-    val patientAgeMonths: Int = 0,
-    val hasSafetyThresholdAlert: Boolean = false,
-    
     val isExceedingMaxSingleDose: Boolean = false,
     val isExceedingMaxDailyDose: Boolean = false,
     val isBelowMinAge: Boolean = false,
@@ -120,5 +105,14 @@ data class DoseCalculationResult(
     val maxSingleDoseMg: Double = 0.0,
     val rawCalculatedDailyDoseMg: Double = 0.0,
     val maxDailyDoseMg: Double = 0.0,
-    val regimen: IndicationRegimen? = null
+    val regimen: IndicationRegimen? = null,
+    val patientAgeYears: Int = 0,
+    val patientAgeMonths: Int = 0,
+    val mgPerKgUsed: Double = 0.0,
+    val isPerDoseCalculation: Boolean = false,
+    val frequencyTimesPerDay: Int = 0,
+    val totalCourseVolumeMl: Double = 0.0,
+    val cappedSingleDoseMg: Double = 0.0,
+    val cappedDailyDoseMg: Double = 0.0,
+    val hasSafetyThresholdAlert: Boolean = false
 )
