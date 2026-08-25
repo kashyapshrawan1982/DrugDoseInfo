@@ -1,11 +1,11 @@
 package com.example.model
 
 enum class DrugCategory {
-    ANTIBIOTIC, ANTIPYRETIC_ANALGESIC, OTHER
+    ALL, ANTIBIOTIC, ANTIPYRETIC_ANALGESIC, OTHER
 }
 
 enum class FormulationType {
-    SYRUP, ORAL_SUSPENSION, DROPS, TABLET, OTHER
+    ALL, SYRUP, ORAL_SUSPENSION, DROPS, TABLET, OTHER
 }
 
 data class Formulation(
@@ -14,9 +14,12 @@ data class Formulation(
     val type: FormulationType,
     val concentrationMg: Double,
     val volumeMl: Double,
-    val unitLabel: String,
+    val unitLabel: String = "",
     val standardDoses: List<Double> = emptyList()
-)
+) {
+    val displayName: String get() = name
+    val mgPerMl: Double get() = if (volumeMl > 0) concentrationMg / volumeMl else 0.0
+}
 
 data class IndicationRegimen(
     val id: String,
@@ -52,27 +55,44 @@ data class Drug(
     val defaultRegimen: IndicationRegimen,
     val alternativeRegimens: List<IndicationRegimen> = emptyList(),
     val formulations: List<Formulation>,
-    val indications: List<String>,
-    val contraindications: List<String>,
-    val warnings: List<String>,
-    val sideEffects: List<String>,
-    val administrationAdvice: String,
-    val reconstitutionStorage: String,
+    val indications: List<String> = emptyList(),
+    val contraindications: List<String> = emptyList(),
+    val warnings: List<String> = emptyList(),
+    val sideEffects: List<String> = emptyList(),
+    val administrationAdvice: String = "",
+    val reconstitutionStorage: String = "",
     val renalAdjustmentNote: String = "",
     val references: List<String> = emptyList(),
     val indianBrands: List<IndianBrand> = emptyList(),
-    val isCustom: Boolean = false
-)
+    val isCustom: Boolean = false,
+    val lastEditedTimestamp: Long = 0L
+) {
+    val displayName: String get() = name
+}
 
-// Yahi wo class hai jiska error aa raha tha!
 data class DoseCalculationResult(
     val drug: Drug,
     val formulation: Formulation,
     val singleDoseMg: Double,
     val singleDoseMl: Double,
+    val singleDoseTablets: Double? = null,
     val dailyDoseMg: Double,
+    val totalDailyDoseMg: Double = 0.0,
+    val totalDailyDoseMl: Double = 0.0,
     val frequencyDescription: String,
+    val frequencyText: String = "",
     val instructions: String = "",
-    val bottlesNeededSummary: String = "", 
-    val courseDurationDays: Int = 0
+    val bottlesNeededSummary: String = "",
+    val courseDurationDays: Int = 0,
+    val stepByStepExplanation: String = "",
+    val warnings: List<String> = emptyList(),
+    val patientWeightKg: Double = 0.0,
+    val isExceedingMaxSingleDose: Boolean = false,
+    val isExceedingMaxDailyDose: Boolean = false,
+    val isBelowMinAge: Boolean = false,
+    val rawCalculatedSingleDoseMg: Double = 0.0,
+    val maxSingleDoseMg: Double = 0.0,
+    val rawCalculatedDailyDoseMg: Double = 0.0,
+    val maxDailyDoseMg: Double = 0.0,
+    val regimen: IndicationRegimen? = null
 )
