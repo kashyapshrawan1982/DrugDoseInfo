@@ -291,3 +291,6 @@ object DrugDatabase {
                 Formulation("aug_228", "Dry Syrup 228.5 mg / 5 mL (200mg Amox + 28.5mg Clav)", FormulationType.ORAL_SUSPENSION, 200.0, 5.0, "200mg/5mL", listOf(30.0)),
                 Formulation("aug_375", "Tablet 375 mg (250mg Amox + 125mg Clav)", FormulationType.TABLET, 250.0, 1.0, "250mg/Tab", emptyList())
             )
+)
+)
+)
