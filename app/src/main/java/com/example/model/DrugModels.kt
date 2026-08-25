@@ -4,7 +4,10 @@ enum class DrugCategory {
     ALL, 
     ANTIBIOTIC, 
     ANTIPYRETIC_ANALGESIC, 
-    OTHER
+    OTHER;
+
+    val displayName: String 
+        get() = name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
 }
 
 enum class FormulationType {
@@ -13,7 +16,11 @@ enum class FormulationType {
     ORAL_SUSPENSION, 
     DROPS, 
     TABLET, 
-    OTHER
+    CAPSULE, 
+    OTHER;
+
+    val displayName: String 
+        get() = name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
 }
 
 data class Formulation(
@@ -23,7 +30,8 @@ data class Formulation(
     val concentrationMg: Double,
     val volumeMl: Double,
     val unitLabel: String = "",
-    val standardDoses: List<Double> = emptyList()
+    val standardDoses: List<Double> = emptyList(),
+    val bottleSizesMl: List<Double> = emptyList()
 ) {
     val displayName: String get() = name
     val mgPerMl: Double get() = if (volumeMl > 0.0) concentrationMg / volumeMl else 0.0
@@ -35,20 +43,24 @@ data class IndicationRegimen(
     val description: String,
     val defaultMgPerKgPerDay: Double = 0.0,
     val defaultMgPerKgPerDose: Double? = null,
-    val frequencyTimesPerDay: Int,
-    val frequencyDescription: String,
-    val maxDailyDoseMg: Double,
-    val maxSingleDoseMg: Double,
+    val frequencyTimesPerDay: Int = 1,
+    val frequencyDescription: String = "",
+    val maxDailyDoseMg: Double = 0.0,
+    val maxSingleDoseMg: Double = 0.0,
     val minAgeMonths: Int = 0,
-    val standardDurationDays: Int
-)
+    val standardDurationDays: Int = 1
+) {
+    val displayName: String get() = name
+}
 
 data class IndianBrand(
     val name: String,
     val company: String,
     val forms: String,
     val packaging: String
-)
+) {
+    val displayName: String get() = name
+}
 
 data class Drug(
     val id: String,
@@ -62,7 +74,7 @@ data class Drug(
     val minAgeMonths: Int = 0,
     val defaultRegimen: IndicationRegimen,
     val alternativeRegimens: List<IndicationRegimen> = emptyList(),
-    val formulations: List<Formulation>,
+    val formulations: List<Formulation> = emptyList(),
     val indications: List<String> = emptyList(),
     val contraindications: List<String> = emptyList(),
     val warnings: List<String> = emptyList(),
@@ -102,5 +114,14 @@ data class DoseCalculationResult(
     val maxSingleDoseMg: Double = 0.0,
     val rawCalculatedDailyDoseMg: Double = 0.0,
     val maxDailyDoseMg: Double = 0.0,
-    val regimen: IndicationRegimen? = null
+    val regimen: IndicationRegimen? = null,
+    val patientAgeYears: Int = 0,
+    val patientAgeMonths: Int = 0,
+    val mgPerKgUsed: Double = 0.0,
+    val isPerDoseCalculation: Boolean = false,
+    val frequencyTimesPerDay: Int = 0,
+    val totalCourseVolumeMl: Double = 0.0,
+    val cappedSingleDoseMg: Double = 0.0,
+    val cappedDailyDoseMg: Double = 0.0,
+    val hasSafetyThresholdAlert: Boolean = false
 )
