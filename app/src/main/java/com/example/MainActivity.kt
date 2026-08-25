@@ -3,26 +3,22 @@ package com.example
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.viewModels
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-// Sahi imports yahan hain 👇
-import com.example.ui.screens.FormularyAdministrationCard
+import androidx.compose.material3.Text
 import com.example.viewmodel.DrugViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val drugViewModel: DrugViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val viewModel: DrugViewModel = viewModel()
-                    FormularyAdministrationCard(viewModel = viewModel)
+                Surface {
+                    Text(text = "Drug Dose Info App")
                 }
             }
         }
